@@ -15,5 +15,8 @@ dependencyResolutionManagement {
 rootProject.name = "example-file-manager"
 include(":app")
 include(":core-base")
+include(":core-components")
 include(":core-ui")
 include(":core-db")
+include(":feature-file-list-api")
+include(":feature-file-list-impl")

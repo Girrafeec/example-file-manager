@@ -1,34 +1,28 @@
 plugins {
-    id(Plugins.androidApplication)
+    id(Plugins.androidLibrary)
     id(Plugins.kotlinAndroid)
     id(Plugins.kotlinKapt)
-    id(Plugins.safeArgs)
     id(Plugins.kotlinParcelize)
 }
 
 android {
-    namespace = "com.girrafeecstud.example_file_manager"
+    namespace = "com.girrafeecstud.file_list_impl"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.girrafeecstud.example_file_manager"
         minSdk = 21
         targetSdk = 33
-        versionCode = 1
-        versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-        debug {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -37,9 +31,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    buildFeatures {
-        viewBinding = true
     }
     packagingOptions {
         resources {
@@ -77,14 +68,6 @@ dependencies {
     implementation(Dependencies.Jetpack.Navigation.navigationFragmentKtx)
     implementation(Dependencies.Jetpack.Navigation.navigationUiKtx)
 
-    // Retrofit
-    implementation(Dependencies.Retrofit.retrofit)
-    implementation(Dependencies.Retrofit.retrofitConverterGson)
-    implementation(Dependencies.Retrofit.retrofitConverterScalars)
-
-    // OkHttp3
-    implementation(Dependencies.OkHttp3.okHttp3)
-
     // Room
     implementation(Dependencies.Jetpack.Room.room)
     kapt(Dependencies.Jetpack.Room.roomCompiler)
@@ -109,5 +92,4 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-db"))
     implementation(project(":feature-file-list-api"))
-    implementation(project(":feature-file-list-impl"))
 }
