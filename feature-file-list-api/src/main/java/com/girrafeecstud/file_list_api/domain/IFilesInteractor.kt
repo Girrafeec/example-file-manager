@@ -6,9 +6,9 @@ import com.girrafeecstud.core_base.domain.base.BusinessResult
 import kotlinx.coroutines.flow.Flow
 
 
-interface IFileListInteractor {
+interface IFilesInteractor {
 
     // TODO change path parameter?
-    fun getFileList(path: String): Flow<BusinessResult<List<FileInfo>>>
+    fun getFilesList(path: String): Flow<BusinessResult<List<FileInfo>>>
 
 }

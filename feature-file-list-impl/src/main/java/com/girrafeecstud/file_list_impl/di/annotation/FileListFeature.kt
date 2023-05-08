@@ -1,4 +1,4 @@
-package com.girrafeecstud.file_list_impl.di
+package com.girrafeecstud.file_list_impl.di.annotation
 
 import javax.inject.Scope
 

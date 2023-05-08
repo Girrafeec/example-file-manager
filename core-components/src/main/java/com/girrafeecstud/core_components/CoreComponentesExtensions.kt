@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.os.storage.StorageManager
 import androidx.fragment.app.Fragment
 
 fun Activity.vibrate(
@@ -50,3 +51,8 @@ internal const val DEFAULT_VIBRATION_MILLIS = 100L
 internal const val DEFAULT_VIBRATION_AMPLITUDE = VibrationEffect.DEFAULT_AMPLITUDE
 
 internal const val INTENSIVE_VIBRATION_AMPLITUDE = VibrationEffect.EFFECT_TICK
+
+//TODO finish
+fun Activity.SDCardExists(): Boolean {
+    return false
+}

@@ -2,16 +2,18 @@
 
 package com.girrafeecstud.file_list_api.di
 
-import com.girrafeecstud.file_list_api.data.IFileListDataSource
-import com.girrafeecstud.file_list_api.domain.IFileListInteractor
-import com.girrafeecstud.file_list_api.domain.IFileListRepository
+import com.girrafeecstud.file_list_api.data.IFilesDataSource
+import com.girrafeecstud.file_list_api.di.annotation.LocalFilesDataSourceQualifer
+import com.girrafeecstud.file_list_api.domain.IFilesInteractor
+import com.girrafeecstud.file_list_api.domain.IFilesRepository
+import javax.inject.Named
 
 interface FileListFeatureApi {
 
-    fun getFileListDataSource(): IFileListDataSource
+    fun getFilesDataSource(): IFilesDataSource
 
-    fun getFileListRepository(): IFileListRepository
+    fun getFilesRepository(): IFilesRepository
 
-    fun getFileListInteractor(): IFileListInteractor
+    fun getFilesInteractor(): IFilesInteractor
 
 }

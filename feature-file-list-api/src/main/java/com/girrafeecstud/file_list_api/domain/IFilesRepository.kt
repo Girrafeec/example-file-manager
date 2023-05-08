@@ -5,8 +5,8 @@ package com.girrafeecstud.file_list_api.domain
 import com.girrafeecstud.core_base.domain.base.BusinessResult
 import kotlinx.coroutines.flow.Flow
 
-interface IFileListRepository {
+interface IFilesRepository {
 
-    fun getFileList(path: String): Flow<BusinessResult<List<FileInfo>>>
+    fun getFilesList(path: String): Flow<BusinessResult<List<FileInfo>>>
 
 }

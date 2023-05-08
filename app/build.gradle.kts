@@ -104,6 +104,7 @@ dependencies {
     implementation(Dependencies.Glide.glide)
     kapt(Dependencies.Glide.glideCompiler)
 
+    implementation(project(":navigation"))
     implementation(project(":core-base"))
     implementation(project(":core-components"))
     implementation(project(":core-ui"))

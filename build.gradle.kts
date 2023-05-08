@@ -9,7 +9,6 @@ buildscript {
         classpath(Plugins.kotlinGradlePlugin)
         classpath(Plugins.navigationSafeArgsPlugin)
         classpath(Plugins.googleServicesPlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0")
     }
 }
 
