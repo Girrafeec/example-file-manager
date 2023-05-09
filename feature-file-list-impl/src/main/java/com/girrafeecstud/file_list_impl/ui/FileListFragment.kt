@@ -18,11 +18,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.girrafeecstud.core_components.presentation.MainViewModelFactory
 import com.girrafeecstud.core_ui.ui.BaseFragment
 import com.girrafeecstud.file_list_api.domain.FileInfo
+import com.girrafeecstud.file_list_api.domain.FileType
+import com.girrafeecstud.file_list_api.domain.PathInfo
 import com.girrafeecstud.file_list_impl.R
 import com.girrafeecstud.file_list_impl.databinding.FragmentFileListBinding
 import com.girrafeecstud.file_list_impl.presentation.FileListComponentViewModel
@@ -34,6 +38,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FileListFragment : BaseFragment<FileListUiState>(), FileClickEvent {
+
+    private val args: FileListFragmentArgs  by navArgs()
 
     private var _binding: FragmentFileListBinding? = null
 
@@ -48,6 +54,8 @@ class FileListFragment : BaseFragment<FileListUiState>(), FileClickEvent {
 
     @Inject
     lateinit var filesAdapter: FilesAdapter
+
+    private var dirPath: String? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -81,6 +89,10 @@ class FileListFragment : BaseFragment<FileListUiState>(), FileClickEvent {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        args.dirPath?.let {
+            this.dirPath = it
+        }
+
         initRecView()
         checkReadStoragePermission()
     }
@@ -109,11 +121,17 @@ class FileListFragment : BaseFragment<FileListUiState>(), FileClickEvent {
 
     override fun onFileClicked(file: FileInfo) {
         Log.i("tag file list", "file $file clicked")
+        if (file.fileType == FileType.FOLDER) {
+            val path = PathInfo(isPathActive = true, name = file.name, path = file.path)
+            (requireParentFragment().requireParentFragment() as FileListFlowFragment)
+                .openDirectory(path = path, isDirectoryNew = true)
+        }
     }
 
     private fun initRecView() {
         binding.files.let { files ->
             filesAdapter.clickEvent = this
+            files.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
             files.adapter = filesAdapter
             files.layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -136,6 +154,8 @@ class FileListFragment : BaseFragment<FileListUiState>(), FileClickEvent {
     }
 
     private fun getFiles() {
-        fileListViewModel.getFileList(path = Environment.getExternalStorageDirectory().absolutePath)
+        // TODO try smth else
+        if (dirPath != null)
+            fileListViewModel.getFileList(path = dirPath!!)
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import com.girrafeecstud.core_base.base.sortByName
 import com.girrafeecstud.core_base.domain.base.BusinessResult
 import com.girrafeecstud.file_list_api.data.IFilesDataSource
 import com.girrafeecstud.file_list_api.domain.FileInfo
@@ -25,12 +26,24 @@ class LocalFilesDataSource @Inject constructor(
     private val context: Context
 ) : IFilesDataSource {
 
-    override fun getFilesList(path: String): Flow<BusinessResult<List<FileInfo>>> =
+    override fun getFilesAndDirsList(path: String): Flow<BusinessResult<List<FileInfo>>> =
         flow {
             val files = mutableListOf<FileInfo>()
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 files.addAll(getFilesAndDirs(dirPath = path))
+            }
+
+            val sortedFiles = files.sortByName { it -> it.name }
+            emit(BusinessResult.Success(data = sortedFiles))
+        }
+
+    override fun getAllFilesList(path: String): Flow<BusinessResult<List<FileInfo>>> =
+        flow {
+            val files = mutableListOf<FileInfo>()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                files.addAll(getFiles(dirPath = path))
             }
 
             emit(BusinessResult.Success(data = files))
@@ -81,6 +94,43 @@ class LocalFilesDataSource @Inject constructor(
                     )
                 )
             }
+        }
+        return files
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getFiles(dirPath: String): List<FileInfo> {
+
+        val dir = File(dirPath)
+
+        val files = mutableListOf<FileInfo>()
+        if (!dir.exists()) {
+            TODO("throw an error")
+        }
+        dir.listFiles()?.forEach { file ->
+
+            val fileCreationTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val fileAttr = Files.readAttributes(file.toPath(), BasicFileAttributes::class.java)
+                val fileTime = fileAttr.creationTime().toMillis()
+                fileTime
+            } else {
+                file.lastModified()
+            }
+
+            if (!file.isDirectory) {
+                //TODO do smth with version
+                files.add(
+                    FileInfo(
+                        path = file.absolutePath,
+                        creationDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(fileCreationTime), ZoneId.systemDefault()),
+                        name = file.name,
+                        size = file.length(),
+                        fileType = FileType.fromExtension(extension = file.extension),
+                        isChanged = false
+                    )
+                )
+            }
+            getFiles(dirPath = file.absolutePath)
         }
         return files
     }

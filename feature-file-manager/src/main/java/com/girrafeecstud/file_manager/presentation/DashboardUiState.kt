@@ -1,4 +1,4 @@
-package com.girrafeecstud.file_list_impl.presentation
+package com.girrafeecstud.file_manager.presentation
 
 import com.girrafeecstud.core_ui.presentation.UiState
 

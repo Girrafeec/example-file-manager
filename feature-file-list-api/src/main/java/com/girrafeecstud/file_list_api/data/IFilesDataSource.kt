@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IFilesDataSource {
 
-    fun getFilesList(path: String): Flow<BusinessResult<List<FileInfo>>>
+    fun getFilesAndDirsList(path: String): Flow<BusinessResult<List<FileInfo>>>
 
+    fun getAllFilesList(path: String): Flow<BusinessResult<List<FileInfo>>>
 }

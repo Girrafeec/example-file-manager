@@ -1,3 +1,5 @@
+/* Created by Girrafeec */
+
 package com.girrafeecstud.navigation
 
 interface Navigator<in NavigationDestination> {

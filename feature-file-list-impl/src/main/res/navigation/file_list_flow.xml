@@ -3,26 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/file_list_flow"
-    app:startDestination="@id/file_manager_dashboard_fragment">
+    app:startDestination="@id/file_list_fragment">
 
-    <action
-        android:id="@+id/action_file_manager_dashboard_fragment"
-        app:destination="@id/file_manager_dashboard_fragment"/>
+    <argument
+        android:name="defaultPath"
+        app:nullable="true"
+        android:defaultValue="@null"/>
 
     <action
         android:id="@+id/action_file_list_fragment"
-        app:destination="@id/file_list_fragment"/>
+        app:destination="@id/file_list_fragment"
+        app:popUpTo="@id/file_list_fragment">
+
+        <argument
+            android:name="dirPath"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+    </action>
 
     <fragment
         android:id="@+id/file_list_fragment"
         android:name="com.girrafeecstud.file_list_impl.ui.FileListFragment"
         android:label="fragment_file_list"
-        tools:layout="@layout/fragment_file_list" />
+        tools:layout="@layout/fragment_file_list">
 
-    <fragment
-        android:id="@+id/file_manager_dashboard_fragment"
-        android:name="com.girrafeecstud.file_list_impl.ui.FileManagerDashboardFragment"
-        android:label="fragment_file_manager_dashboard"
-        tools:layout="@layout/fragment_file_manager_dashboard" />
+        <argument
+            android:name="dirPath"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+    </fragment>
 
 </navigation>

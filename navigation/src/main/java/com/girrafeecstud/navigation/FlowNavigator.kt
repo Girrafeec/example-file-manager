@@ -1,9 +1,11 @@
+/* Created by Girrafeec */
+
 package com.girrafeecstud.navigation
 
 import android.util.Log
 import androidx.navigation.NavController
 import com.girrafeecstud.navigation.destination.FlowDestination
-import com.girrafeecstud.navigation.extensions.setStartDestination
+import com.girrafeecstud.navigation.extension.setStartDestination
 
 class FlowNavigator : Navigator<FlowDestination> {
 
@@ -15,27 +17,31 @@ class FlowNavigator : Navigator<FlowDestination> {
     }
 
     override fun navigateToDestination(destination: FlowDestination) {
-//        when (destination) {
-//            is FlowDestination.FileListFlow -> {
-//                navController?.navigate(
-//                    MainNavFlowDirections
-//                        .actionGlobalOnBoardFlow()
-//                        .setDefaultScreen(destination.defaultScreen as DefaultOnBoardFlowScreen)
-//                )
-//            }
-//        }
-        Log.i("navigation", "backstack")
-        for (entry in navController?.backQueue!!)
-            Log.i("navigation entry", entry.destination.toString())
+        when (destination) {
+            is FlowDestination.FileManagerFlow -> {
+                navController?.navigate(
+                    MainNavFlowDirections
+                        .actionGlobalFileManagerFlowFragment()
+                )
+            }
+            is FlowDestination.FileListFlow -> {
+                navController?.navigate(
+                    MainNavFlowDirections
+                        .actionGlobalFileListFlowFragment()
+                        .setDefaultPath(destination.defaultPath)
+                )
+            }
+        }
     }
 
     override fun setStartDestination(destination: FlowDestination) {
         navController?.setStartDestination(
-            destination = destination, graphId = R.navigation.main_nav_flow
+            destination = destination,
+            graphId = R.navigation.main_nav_flow,
+            args = destination.args
         )
         Log.i("navigation", "backstack")
         for (entry in navController?.backQueue!!)
             Log.i("navigation entry", entry.destination.toString())
     }
-
 }

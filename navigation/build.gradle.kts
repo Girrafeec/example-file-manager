@@ -41,11 +41,14 @@ dependencies {
     // Core
     implementation(Dependencies.AndroidX.Core.coreKtx)
 
-    // Navigation Component
-    implementation(Dependencies.Jetpack.Navigation.navigationFragmentKtx)
-    implementation(Dependencies.Jetpack.Navigation.navigationUiKtx)
+    // Unit-tests
+    testImplementation(Dependencies.jUnit.jUnit)
 
     // Dagger
     implementation(Dependencies.Dagger.dagger)
     kapt(Dependencies.Dagger.daggerCompiler)
+
+    // Navigation
+    implementation(Dependencies.Jetpack.Navigation.navigationFragmentKtx)
+    implementation(Dependencies.Jetpack.Navigation.navigationUiKtx)
 }

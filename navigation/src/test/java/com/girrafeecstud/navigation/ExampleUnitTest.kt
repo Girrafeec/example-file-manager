@@ -1,4 +1,4 @@
-package com.girrafeecstud.signals.navigation
+package com.girrafeecstud.navigation
 
 import org.junit.Test
 

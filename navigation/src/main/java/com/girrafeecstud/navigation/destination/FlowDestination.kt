@@ -1,16 +1,23 @@
+/* Created by Girrafeec */
+
 package com.girrafeecstud.navigation.destination
 
-import com.girrafeecstud.navigation.*
+import com.girrafeecstud.navigation.R
 
 sealed class FlowDestination(
-    private val _destinationId: Int
+    override val destinationId: Int,
+    override val args: Map<String, Any> = emptyMap()
 ) : NavigationDestination {
 
-    override val destinationId: Int
-        get() = _destinationId
+    object FileManagerFlow : FlowDestination(
+        destinationId = R.id.file_manager_flow_fragment
+    )
 
-    object FileListFlow : FlowDestination(
-        _destinationId = R.id.file_list_flow_fragment
+    class FileListFlow(
+        val defaultPath: String
+    ) : FlowDestination(
+        destinationId = R.id.file_list_flow_fragment,
+        args = mapOf("defaultPath" to defaultPath)
     )
 
 }

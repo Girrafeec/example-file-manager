@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/file_manager_flow"
+    app:startDestination="@id/file_manager_dashboard_fragment">
+
+    <action
+        android:id="@+id/action_file_manager_dashboard_fragment"
+        app:destination="@id/file_manager_dashboard_fragment"/>
+
+    <fragment
+        android:id="@+id/file_manager_dashboard_fragment"
+        android:name="com.girrafeecstud.file_manager.ui.FileManagerDashboardFragment"
+        tools:layout="@layout/fragment_file_manager_dashboard"
+        android:label="file_manager_dashboard_fragment"/>
+
+</navigation>

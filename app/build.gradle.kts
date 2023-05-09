@@ -2,8 +2,6 @@ plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinAndroid)
     id(Plugins.kotlinKapt)
-    id(Plugins.safeArgs)
-    id(Plugins.kotlinParcelize)
 }
 
 android {
@@ -109,6 +107,8 @@ dependencies {
     implementation(project(":core-components"))
     implementation(project(":core-ui"))
     implementation(project(":core-db"))
+    implementation(project(":feature-file-manager"))
     implementation(project(":feature-file-list-api"))
     implementation(project(":feature-file-list-impl"))
+    implementation(project(":feature-modified-file-list"))
 }

@@ -1,18 +1,18 @@
-package com.girrafeecstud.file_list_impl.ui
+package com.girrafeecstud.file_manager.ui
 
 import android.content.Context
-import android.content.Context.STORAGE_SERVICE
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.girrafeecstud.core_components.SDCardExists
-import com.girrafeecstud.core_ui.extension.removeView
+import androidx.lifecycle.ViewModelProvider
 import com.girrafeecstud.core_ui.ui.BaseFragment
-import com.girrafeecstud.file_list_impl.R
-import com.girrafeecstud.file_list_impl.databinding.FragmentFileManagerDashboardBinding
-import com.girrafeecstud.file_list_impl.presentation.DashboardUiState
+import com.girrafeecstud.file_manager.databinding.FragmentFileManagerDashboardBinding
+import com.girrafeecstud.file_manager.presentation.DashboardUiState
+import com.girrafeecstud.file_manager.presentation.FileManagerDashboardComponentViewModel
+import com.girrafeecstud.navigation.ToFlowNavigable
+import com.girrafeecstud.navigation.destination.FlowDestination
 
 class FileManagerDashboardFragment
     : BaseFragment<DashboardUiState>() {
@@ -22,6 +22,8 @@ class FileManagerDashboardFragment
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        ViewModelProvider(this).get(FileManagerDashboardComponentViewModel::class.java)
+            .fileManagerDashboardComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -45,7 +47,10 @@ class FileManagerDashboardFragment
 
     override fun setListeners() {
         binding.phoneCard.setOnClickListener {
-            TODO()
+            val phoneDirPath = Environment.getExternalStorageDirectory().absolutePath
+            (requireActivity() as ToFlowNavigable).navigateToScreen(
+                destination = FlowDestination.FileListFlow(defaultPath = phoneDirPath)
+            )
         }
 //        binding.sdCard.setOnClickListener {
 //            TODO()
