@@ -2,6 +2,6 @@
 
 package com.girrafeecstud.core_base.base
 
-import java.io.IOException
+class NoNetworkConnectionException: Exception()
 
-class NoNetworkConnectionException: IOException()
+class NoReadMemoryPermissionsException: Exception()

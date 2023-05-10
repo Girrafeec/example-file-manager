@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+    <external-path
+        name="files_root"
+        path="Android/data/com.girrafeecstud.example_file_manager"/>
+    <external-path
+        name="external_storage_root"
+        path="."/>
+</paths>

@@ -2,8 +2,6 @@ plugins {
     id(Plugins.androidApplication)
     id(Plugins.kotlinAndroid)
     id(Plugins.kotlinKapt)
-    id(Plugins.safeArgs)
-    id(Plugins.kotlinParcelize)
 }
 
 android {
@@ -104,7 +102,17 @@ dependencies {
     implementation(Dependencies.Glide.glide)
     kapt(Dependencies.Glide.glideCompiler)
 
+    // ThreeTenAbp
+    implementation(Dependencies.Other.threeTenAbp)
+
+    implementation(project(":navigation"))
     implementation(project(":core-base"))
+    implementation(project(":core-components"))
     implementation(project(":core-ui"))
     implementation(project(":core-db"))
+    implementation(project(":feature-file-manager"))
+    implementation(project(":feature-file-list-api"))
+    implementation(project(":feature-file-list-impl"))
+    implementation(project(":feature-modified-files-api"))
+    implementation(project(":feature-modified-files-impl"))
 }

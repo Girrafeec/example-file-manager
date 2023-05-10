@@ -151,4 +151,7 @@ class Dependencies {
         const val shafranSharedPreferencesMock = "io.github.ivanshafran:shared-preferences-mock:${Versions.shafranSharedPreferencesMock}"
     }
 
+    object Other {
+        const val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.3.1"
+    }
 }
