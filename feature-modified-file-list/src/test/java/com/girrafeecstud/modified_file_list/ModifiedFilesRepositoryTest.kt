@@ -20,6 +20,7 @@ import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
+import java.io.FileNotFoundException
 
 class ModifiedFilesRepositoryTest {
 
@@ -80,23 +81,164 @@ class ModifiedFilesRepositoryTest {
         assertEquals(listOf(BusinessResult.Success(modifiedFiles)), result)
     }
 
-//    @Test
-//    fun `EXPECT Success result with null as empty modified files list`() = runBlocking {
-//
-//    }
-//
-//    @Test
-//    fun `EXPECT FILE_OR_DIR_NOT_EXIST result from filesDataSource`() = runBlocking {
-//
-//    }
-//
-//    @Test
-//    fun `EXPECT NO_READ_MEMORY_PERMISSION result from filesDataSource`() = runBlocking {
-//
-//    }
-//
+    @Test
+    fun `EXPECT Success result with null as empty modified files list`() = runBlocking {
+        val filesResult = BusinessResult.Success(data = files)
+        val filesHashesResult = BusinessResult.Success(data = filesOldHashes)
+        val newFilesHashesResult = filesHashesNotChanged
+
+        whenever(
+            filesDataSource.getAllFilesList(any())
+        )
+            .thenReturn(
+                flowOf(filesResult)
+            )
+
+        whenever(
+            filesHashDataSource.getFilesAndHashes()
+        )
+            .thenReturn(
+                flowOf(filesHashesResult)
+            )
+
+        whenever(
+            hashCalculator.calculateFilesHashes(any())
+        )
+            .thenReturn(
+                flowOf(newFilesHashesResult)
+            )
+
+        whenever(
+            filesHashDataSource.updateFilesHashes(any())
+        ).thenReturn(
+            flowOf(BusinessResult.Success(data = EmptyResult))
+        )
+
+        // when
+        val result = modifiedFilesRepository.getModifiedFiles("").toList()
+
+        // then
+        assertEquals(listOf(BusinessResult.Success(data = null)), result)
+    }
+
+    @Test
+    fun `EXPECT FILE_OR_DIR_NOT_EXIST result from filesDataSource`() = runBlocking {
+        val filesResult = fileOrDirNotExitsResult
+        val filesHashesResult = BusinessResult.Success(data = filesOldHashes)
+        val newFilesHashesResult = filesHashesNotChanged
+
+        whenever(
+            filesDataSource.getAllFilesList(any())
+        )
+            .thenReturn(
+                flowOf(filesResult)
+            )
+
+        whenever(
+            filesHashDataSource.getFilesAndHashes()
+        )
+            .thenReturn(
+                flowOf(filesHashesResult)
+            )
+
+        whenever(
+            hashCalculator.calculateFilesHashes(any())
+        )
+            .thenReturn(
+                flowOf(newFilesHashesResult)
+            )
+
+        whenever(
+            filesHashDataSource.updateFilesHashes(any())
+        ).thenReturn(
+            flowOf(BusinessResult.Success(data = EmptyResult))
+        )
+
+        // when
+        val result = modifiedFilesRepository.getModifiedFiles("").toList()
+
+        // then
+        assertEquals(listOf(fileOrDirNotExitsResult), result)
+    }
+
+    @Test
+    fun `EXPECT NO_READ_MEMORY_PERMISSION result from filesDataSource`() = runBlocking {
+        val filesResult = noReadMemoryPermissionResult
+        val filesHashesResult = BusinessResult.Success(data = filesOldHashes)
+        val newFilesHashesResult = filesHashesNotChanged
+
+        whenever(
+            filesDataSource.getAllFilesList(any())
+        )
+            .thenReturn(
+                flowOf(filesResult)
+            )
+
+        whenever(
+            filesHashDataSource.getFilesAndHashes()
+        )
+            .thenReturn(
+                flowOf(filesHashesResult)
+            )
+
+        whenever(
+            hashCalculator.calculateFilesHashes(any())
+        )
+            .thenReturn(
+                flowOf(newFilesHashesResult)
+            )
+
+        whenever(
+            filesHashDataSource.updateFilesHashes(any())
+        ).thenReturn(
+            flowOf(BusinessResult.Success(data = EmptyResult))
+        )
+
+        // when
+        val result = modifiedFilesRepository.getModifiedFiles("").toList()
+
+        // then
+        assertEquals(listOf(noReadMemoryPermissionResult), result)
+    }
+
 //    @Test
 //    fun `EXPECT FILE_OR_DIR_NOT_EXIST result from hashCalculator`() = runBlocking {
+//        val filesResult = BusinessResult.Success(data = files)
+//        val filesHashesResult = BusinessResult.Success(data = filesOldHashes)
+//        val newFilesHashesResult = filesHashesNotChanged
 //
+//        whenever(
+//            filesDataSource.getAllFilesList(any())
+//        )
+//            .thenReturn(
+//                flowOf(filesResult)
+//            )
+//
+//        whenever(
+//            filesHashDataSource.getFilesAndHashes()
+//        )
+//            .thenReturn(
+//                flowOf(filesHashesResult)
+//            )
+//
+//        whenever(
+//            hashCalculator.calculateFilesHashes(any())
+//        )
+//            .thenThrow(
+//                FileNotFoundException()
+//            )
+//
+//        whenever(
+//            filesHashDataSource.updateFilesHashes(any())
+//        ).thenReturn(
+//            flowOf(BusinessResult.Success(data = EmptyResult))
+//        )
+//
+//        // when
+//        val result = modifiedFilesRepository.getModifiedFiles("").toList()
+//
+//        // then
+//        assertEquals(listOf(fileOrDirNotExitsResult), result)
 //    }
+
 }

@@ -36,29 +36,29 @@ class ModifiedFilesRepository @Inject constructor(
                             val files = filesResult.data!!
                             val oldHashes = filesHashesResult.data!!
                             val newHashes = mutableMapOf<String, String>()
-                            var modifiedFiles: ArrayList<FileInfo> = ArrayList()
+                            var modifiedFiles: ArrayList<FileInfo>? = ArrayList()
 
-                            // Compare new hashes with ahshes from db
-                            try {
-                                hashCalculator.calculateFilesHashes(files)
-                                    .collect { filesAndHashes ->
-                                        filesAndHashes.forEach { (fileInfo, hash) ->
-                                            val path = fileInfo.path
-                                            newHashes[path] = hash
-                                            if (oldHashes.containsKey(path) && oldHashes[path] != hash) {
-                                                modifiedFiles.add(fileInfo)
-                                            }
+                            // Compare new hashes with hashes from db
+                            hashCalculator.calculateFilesHashes(files)
+                                .catch { e ->
+                                    if (e is FileNotFoundException)
+                                        flowOf(BusinessResult.Exception(exceptionType = ExceptionType.FILE_OR_DIR_NOT_EXIST))
+                                }
+                                .collect { filesAndHashes ->
+                                    filesAndHashes.forEach { (fileInfo, hash) ->
+                                        val path = fileInfo.path
+                                        newHashes[path] = hash
+                                        if (oldHashes.containsKey(path) && oldHashes[path] != hash) {
+                                            modifiedFiles?.add(fileInfo)
                                         }
                                     }
-                                // Update hashes in db
-                                filesHashDataSource.updateFilesHashes(newHashes).collect()
+                                }
+                            // Update hashes in db
+                            filesHashDataSource.updateFilesHashes(newHashes).collect()
 
-//                                if (modifiedFiles?.isEmpty() == true)
-//                                    modifiedFiles = null
-                                flowOf(BusinessResult.Success(data = modifiedFiles))
-                            } catch (e: FileNotFoundException) {
-                                flowOf(BusinessResult.Exception(exceptionType = ExceptionType.FILE_OR_DIR_NOT_EXIST))
-                            }
+                            if (modifiedFiles?.isEmpty() == true)
+                                modifiedFiles = null
+                            flowOf(BusinessResult.Success(data = modifiedFiles))
                         }
                         is BusinessResult.Error -> flowOf(BusinessResult.Error(filesHashesResult.businessErrorType))
                         is BusinessResult.Exception -> flowOf(BusinessResult.Exception(filesHashesResult.exceptionType))
