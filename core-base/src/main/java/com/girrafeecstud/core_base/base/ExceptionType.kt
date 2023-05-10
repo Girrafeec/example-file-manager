@@ -3,6 +3,6 @@
 package com.girrafeecstud.core_base.base
 
 enum class ExceptionType {
-    NO_INTERNET_CONNECTION,
-    INTERNET_CONNECTION_TIMEOUT
+    NO_READ_MEMORY_PERMISSION,
+    FILE_OR_DIR_NOT_EXIST
 }

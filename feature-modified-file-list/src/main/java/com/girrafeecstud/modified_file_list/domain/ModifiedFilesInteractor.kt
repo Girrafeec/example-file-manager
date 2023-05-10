@@ -13,6 +13,6 @@ class ModifiedFilesInteractor @Inject constructor(
     private val repository: IModifiedFilesRepository
 ) {
 
-    fun getModifiedFiles(): Flow<BusinessResult<List<FileInfo>>> =
-        repository.getModifiedFiles().flowOn(Dispatchers.IO)
+    fun getModifiedFiles(path: String): Flow<BusinessResult<List<FileInfo>>> =
+        repository.getModifiedFiles(path = path).flowOn(Dispatchers.IO)
 }

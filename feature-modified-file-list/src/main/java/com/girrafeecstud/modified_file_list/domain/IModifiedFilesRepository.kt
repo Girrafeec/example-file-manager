@@ -5,5 +5,5 @@ import com.girrafeecstud.file_list_api.domain.FileInfo
 import kotlinx.coroutines.flow.Flow
 
 interface IModifiedFilesRepository {
-    fun getModifiedFiles(): Flow<BusinessResult<List<FileInfo>>>
+    fun getModifiedFiles(path: String): Flow<BusinessResult<List<FileInfo>>>
 }

@@ -2,6 +2,8 @@ package com.girrafeecstud.modified_file_list.di
 
 import android.content.Context
 import com.girrafeecstud.modified_file_list.data.FileHashCalculator
+import com.girrafeecstud.modified_file_list.data.FilesHashDataSource
+import com.girrafeecstud.modified_file_list.data.IFilesHashDataSource
 import com.girrafeecstud.modified_file_list.data.ModifiedFilesRepository
 import com.girrafeecstud.modified_file_list.domain.IModifiedFilesRepository
 import com.girrafeecstud.modified_file_list.domain.ModifiedFilesInteractor
@@ -28,6 +30,10 @@ class ModifiedFilesFeatureModule {
 
     @Module
     interface ModifiedFilesFeatureBindModule {
+
+        @ModifiedFilesFeature
+        @Binds
+        fun bindsIFilesHashDataSource(impl: FilesHashDataSource): IFilesHashDataSource
 
         @ModifiedFilesFeature
         @Binds

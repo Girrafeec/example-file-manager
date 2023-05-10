@@ -17,7 +17,8 @@ class FileHashCalculator {
         private const val DEFAULT_BUFFER_SIZE = 8192
     }
 
-    fun calculateFilesHashes(files: List<FileInfo>): Flow<Pair<FileInfo, String>> = flow {
+    fun calculateFilesHashes(files: List<FileInfo>): Flow<Map<FileInfo, String>> = flow {
+        val resultMap = mutableMapOf<FileInfo, String>()
         val md = MessageDigest.getInstance("SHA-256")
         for (fileInfo in files) {
             val file = File(fileInfo.path)
@@ -32,8 +33,9 @@ class FileHashCalculator {
             inputStream.close()
             val hashBytes = md.digest()
             val hash = hashBytes.toHex()
-            emit(Pair(fileInfo, hash))
+            resultMap[fileInfo] = hash
         }
+        emit(resultMap)
     }.flowOn(Dispatchers.IO)
 
     private fun ByteArray.toHex(): String {

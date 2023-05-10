@@ -6,14 +6,18 @@ import android.content.Context
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import com.girrafeecstud.core_base.base.ExceptionType
+import com.girrafeecstud.core_base.base.NoReadMemoryPermissionsException
 import com.girrafeecstud.core_base.base.sortByName
 import com.girrafeecstud.core_base.domain.base.BusinessResult
 import com.girrafeecstud.file_list_api.data.IFilesDataSource
 import com.girrafeecstud.file_list_api.domain.FileInfo
 import com.girrafeecstud.file_list_api.domain.FileType
+import com.girrafeecstud.file_list_api.utils.FileListUtils.hasReadMemoryPermissions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.File
+import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
 import java.nio.file.attribute.FileTime
@@ -30,11 +34,17 @@ class LocalFilesDataSource @Inject constructor(
         flow {
             val files = mutableListOf<FileInfo>()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                files.addAll(getFilesAndDirs(dirPath = path))
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    files.addAll(getFilesAndDirs(dirPath = path))
+                }
+            } catch (e: FileNotFoundException) {
+                emit(BusinessResult.Exception(exceptionType = ExceptionType.FILE_OR_DIR_NOT_EXIST))
+            } catch (e: NoReadMemoryPermissionsException) {
+                emit(BusinessResult.Exception(exceptionType = ExceptionType.NO_READ_MEMORY_PERMISSION))
             }
 
-            val sortedFiles = files.sortByName { it -> it.name }
+            val sortedFiles = files.sortByName { it.name }
             emit(BusinessResult.Success(data = sortedFiles))
         }
 
@@ -42,8 +52,14 @@ class LocalFilesDataSource @Inject constructor(
         flow {
             val files = mutableListOf<FileInfo>()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                files.addAll(getFiles(dirPath = path))
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    files.addAll(getFiles(dirPath = path))
+                }
+            } catch (e: FileNotFoundException) {
+                emit(BusinessResult.Exception(exceptionType = ExceptionType.FILE_OR_DIR_NOT_EXIST))
+            } catch (e: NoReadMemoryPermissionsException) {
+                emit(BusinessResult.Exception(exceptionType = ExceptionType.NO_READ_MEMORY_PERMISSION))
             }
 
             emit(BusinessResult.Success(data = files))
@@ -52,11 +68,14 @@ class LocalFilesDataSource @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getFilesAndDirs(dirPath: String): List<FileInfo> {
 
+        if (!context.hasReadMemoryPermissions())
+            throw NoReadMemoryPermissionsException()
+
         val dir = File(dirPath)
 
         val files = mutableListOf<FileInfo>()
         if (!dir.exists()) {
-            TODO("throw an error")
+            throw FileNotFoundException()
         }
         dir.listFiles()?.forEach { file ->
 
@@ -101,11 +120,14 @@ class LocalFilesDataSource @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getFiles(dirPath: String): List<FileInfo> {
 
+        if (!context.hasReadMemoryPermissions())
+            throw NoReadMemoryPermissionsException()
+
         val dir = File(dirPath)
 
         val files = mutableListOf<FileInfo>()
         if (!dir.exists()) {
-            TODO("throw an error")
+            throw FileNotFoundException()
         }
         dir.listFiles()?.forEach { file ->
 
