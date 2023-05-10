@@ -60,6 +60,9 @@ dependencies {
     // Coroutines
     implementation(Dependencies.Coroutines.coroutines)
 
+    // ThreeTenAbp
+    implementation(Dependencies.Other.threeTenAbp)
+
     implementation(project(":core-base"))
     implementation(project(":feature-file-list-api"))
 }

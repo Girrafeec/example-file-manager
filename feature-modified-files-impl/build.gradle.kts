@@ -83,6 +83,9 @@ dependencies {
     // Coroutines
     implementation(Dependencies.Coroutines.coroutines)
 
+    // ThreeTenAbp
+    implementation(Dependencies.Other.threeTenAbp)
+
     implementation(project(":navigation"))
     implementation(project(":core-base"))
     implementation(project(":core-db"))

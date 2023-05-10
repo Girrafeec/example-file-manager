@@ -90,6 +90,9 @@ dependencies {
     implementation(Dependencies.Glide.glide)
     kapt(Dependencies.Glide.glideCompiler)
 
+    // ThreeTenAbp
+    implementation(Dependencies.Other.threeTenAbp)
+
     implementation(project(":navigation"))
     implementation(project(":core-base"))
     implementation(project(":core-components"))

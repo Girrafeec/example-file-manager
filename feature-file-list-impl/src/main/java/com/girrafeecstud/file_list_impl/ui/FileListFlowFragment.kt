@@ -100,8 +100,10 @@ class FileListFlowFragment : BaseFlowFragment(
     }
 
     fun openDirectory(path: PathInfo, isDirectoryNew: Boolean = false) {
-        if (isDirectoryNew)
+        if (isDirectoryNew) {
             pathsAdapter.addPath(path)
+            binding.directoryPaths.scrollToPosition(pathsAdapter.itemCount - 1)
+        }
         navigator.navigateToDestination(
             destination = FileListDestination.FileListFragment(dirPath = path.path)
         )

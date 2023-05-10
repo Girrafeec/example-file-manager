@@ -17,14 +17,14 @@ import com.girrafeecstud.file_list_api.domain.FileType
 import com.girrafeecstud.file_list_api.utils.FileListUtils.hasReadMemoryPermissions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
 import java.nio.file.attribute.FileTime
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
 import javax.inject.Inject
 
 class LocalFilesDataSource @Inject constructor(
@@ -36,9 +36,7 @@ class LocalFilesDataSource @Inject constructor(
             val files = mutableListOf<FileInfo>()
 
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    files.addAll(getFilesAndDirs(dirPath = path))
-                }
+                files.addAll(getFilesAndDirs(dirPath = path))
             } catch (e: FileNotFoundException) {
                 emit(BusinessResult.Exception(exceptionType = ExceptionType.FILE_OR_DIR_NOT_EXIST))
             } catch (e: NoReadMemoryPermissionsException) {
@@ -55,9 +53,7 @@ class LocalFilesDataSource @Inject constructor(
 
             Log.i("files", "all files list path = $path")
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    files.addAll(getFiles(dirPath = path))
-                }
+                files.addAll(getFiles(dirPath = path))
             } catch (e: FileNotFoundException) {
                 emit(BusinessResult.Exception(exceptionType = ExceptionType.FILE_OR_DIR_NOT_EXIST))
             } catch (e: NoReadMemoryPermissionsException) {
@@ -68,7 +64,6 @@ class LocalFilesDataSource @Inject constructor(
             emit(BusinessResult.Success(data = files))
         }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getFilesAndDirs(dirPath: String): List<FileInfo> {
 
         if (!context.hasReadMemoryPermissions())
@@ -120,7 +115,6 @@ class LocalFilesDataSource @Inject constructor(
         return files
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getFiles(dirPath: String): List<FileInfo> {
 
         Log.i("files", "get files from $dirPath")

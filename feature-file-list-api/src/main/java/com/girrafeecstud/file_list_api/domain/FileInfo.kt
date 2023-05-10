@@ -1,6 +1,6 @@
 package com.girrafeecstud.file_list_api.domain
 
-import java.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
 
 data class FileInfo(
     val path: String,

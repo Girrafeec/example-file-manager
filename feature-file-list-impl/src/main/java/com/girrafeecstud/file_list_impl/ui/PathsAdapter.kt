@@ -19,7 +19,7 @@ class PathsAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PathViewHolder {
         val binding = PathItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PathViewHolder(binding)
+        return PathViewHolder(binding, context = parent.context)
     }
 
     override fun onBindViewHolder(holder: PathViewHolder, position: Int) {
@@ -44,6 +44,7 @@ class PathsAdapter @Inject constructor(
         for (i in paths.size-1 downTo 0) {
             val path = paths[i].path
             if (path == dirPath) {
+                paths[i].isPathActive = true
                 Log.i("paths adapter", "paths size before=${paths.size}")
                 paths.subList(i+1, paths.size).clear()
                 Log.i("paths adapter", "paths size after=${paths.size}")

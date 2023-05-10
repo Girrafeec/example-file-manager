@@ -19,4 +19,6 @@
     <color name="light_gray_text">#9E9E9E</color>
     <color name="turquoise">#61BFB7</color>
     <color name="pale_pink">#CD6E67</color>
+    <color name="light_gray">#F1F1F1</color>
+    <color name="light_blue">#2DA5FF</color>
 </resources>

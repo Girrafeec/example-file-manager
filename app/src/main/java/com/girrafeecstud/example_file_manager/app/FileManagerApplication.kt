@@ -13,11 +13,13 @@ import com.girrafeecstud.file_manager.di.FileManagerFeatureComponent
 import com.girrafeecstud.modified_files_impl.di.DaggerModifiedFilesFeatureComponent_ModifiedFilesFeatureDependenciesComponent
 import com.girrafeecstud.modified_files_impl.di.ModifiedFilesFeatureComponent
 import com.girrafeecstud.file_manager.di.DaggerFileManagerFeatureComponent_FileManagerFeatureDependenciesComponent
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 class FileManagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AndroidThreeTen.init(this)
 
         AppComponent.init()
 
