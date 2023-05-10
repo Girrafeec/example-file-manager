@@ -24,6 +24,12 @@ class FlowNavigator : Navigator<FlowDestination> {
                         .actionGlobalFileManagerFlowFragment()
                 )
             }
+            is FlowDestination.ModifiedFilesFlow -> {
+                navController?.navigate(
+                    MainNavFlowDirections
+                        .actionGlobalModifiedFilesFlowFragment()
+                )
+            }
             is FlowDestination.FileListFlow -> {
                 navController?.navigate(
                     MainNavFlowDirections

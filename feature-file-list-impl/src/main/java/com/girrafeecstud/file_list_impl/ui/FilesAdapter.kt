@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.girrafeecstud.file_list_api.domain.FileInfo
+import com.girrafeecstud.file_list_api.ui.FileClickEvent
 import com.girrafeecstud.file_list_impl.databinding.FileItemBinding
 import javax.inject.Inject
 

@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import com.girrafeecstud.core_ui.ui.BaseFlowFragment
 import com.girrafeecstud.file_manager.R
 import com.girrafeecstud.file_manager.databinding.FragmentFileManagerFlowBinding
-import com.girrafeecstud.file_manager.di.FileManagerComponent
+import com.girrafeecstud.file_manager.di.FileManagerFeatureComponent
+import com.girrafeecstud.modified_files_api.engine.IModifiedFilesEngine
+import javax.inject.Inject
 
 class FileManagerFlowFragment : BaseFlowFragment(
     R.id.nav_host_fragment_file_manager_container
@@ -19,9 +21,12 @@ class FileManagerFlowFragment : BaseFlowFragment(
     private var _binding: FragmentFileManagerFlowBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var modifiedFilesEngine: IModifiedFilesEngine
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        FileManagerComponent.fileManagerComponent.inject(this)
+        FileManagerFeatureComponent.fileManagerFeatureComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -40,6 +45,8 @@ class FileManagerFlowFragment : BaseFlowFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        modifiedFilesEngine.startEngine()
     }
 
 }

@@ -2,4 +2,5 @@
 <resources>
     <item name="file_manager_flow" type="id"/>
     <item name="file_list_flow" type="id"/>
+    <item name="modified_files_flow" type="id"/>
 </resources>

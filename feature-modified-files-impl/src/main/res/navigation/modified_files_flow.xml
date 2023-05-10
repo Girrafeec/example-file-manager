@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modified_files_flow"
+    app:startDestination="@id/modified_files_fragment">
+
+    <fragment
+        android:id="@+id/modified_files_fragment"
+        android:name="com.girrafeecstud.modified_files_impl.ui.ModifiedFilesFragment"
+        android:label="fragment_modified_files"
+        tools:layout="@layout/fragment_modified_files" />
+
+</navigation>

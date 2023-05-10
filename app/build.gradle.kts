@@ -110,5 +110,6 @@ dependencies {
     implementation(project(":feature-file-manager"))
     implementation(project(":feature-file-list-api"))
     implementation(project(":feature-file-list-impl"))
-    implementation(project(":feature-modified-file-list"))
+    implementation(project(":feature-modified-files-api"))
+    implementation(project(":feature-modified-files-impl"))
 }

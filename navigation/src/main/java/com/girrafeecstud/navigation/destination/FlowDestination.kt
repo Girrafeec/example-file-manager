@@ -20,4 +20,8 @@ sealed class FlowDestination(
         args = mapOf("defaultPath" to defaultPath)
     )
 
+    object ModifiedFilesFlow : FlowDestination(
+        destinationId = R.id.modified_files_flow_fragment,
+    )
+
 }

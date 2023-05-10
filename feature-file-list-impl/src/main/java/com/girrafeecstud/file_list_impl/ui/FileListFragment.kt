@@ -1,13 +1,10 @@
 package com.girrafeecstud.file_list_impl.ui
 
 import android.Manifest
-import android.app.Instrumentation.ActivityResult
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +18,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.girrafeecstud.core_components.presentation.MainViewModelFactory
 import com.girrafeecstud.core_ui.ui.BaseFragment
 import com.girrafeecstud.file_list_api.domain.FileInfo
 import com.girrafeecstud.file_list_api.domain.FileType
 import com.girrafeecstud.file_list_api.domain.PathInfo
-import com.girrafeecstud.file_list_impl.R
+import com.girrafeecstud.file_list_api.ui.FileClickEvent
 import com.girrafeecstud.file_list_impl.databinding.FragmentFileListBinding
 import com.girrafeecstud.file_list_impl.presentation.FileListComponentViewModel
 import com.girrafeecstud.file_list_impl.presentation.FileListUiState

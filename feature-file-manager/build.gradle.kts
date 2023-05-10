@@ -95,4 +95,5 @@ dependencies {
     implementation(project(":core-components"))
     implementation(project(":core-ui"))
     implementation(project(":core-db"))
+    implementation(project(":feature-modified-files-api"))
 }

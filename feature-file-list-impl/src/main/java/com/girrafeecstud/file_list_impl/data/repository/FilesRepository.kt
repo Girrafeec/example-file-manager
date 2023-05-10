@@ -16,6 +16,6 @@ class FilesRepository @Inject constructor(
 ) : IFilesRepository {
 
     override fun getFilesList(path: String): Flow<BusinessResult<List<FileInfo>>> {
-        return dataSource.getFilesList(path = path).flowOn(Dispatchers.IO)
+        return dataSource.getFilesAndDirsList(path = path).flowOn(Dispatchers.IO)
     }
 }

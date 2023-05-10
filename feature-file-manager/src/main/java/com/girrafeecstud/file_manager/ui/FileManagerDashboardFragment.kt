@@ -52,6 +52,11 @@ class FileManagerDashboardFragment
                 destination = FlowDestination.FileListFlow(defaultPath = phoneDirPath)
             )
         }
+        binding.modifiedFilesCard.setOnClickListener {
+            (requireActivity() as ToFlowNavigable).navigateToScreen(
+                destination = FlowDestination.ModifiedFilesFlow
+            )
+        }
 //        binding.sdCard.setOnClickListener {
 //            TODO()
 //        }

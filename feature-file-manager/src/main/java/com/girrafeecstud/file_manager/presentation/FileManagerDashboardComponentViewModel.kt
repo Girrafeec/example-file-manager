@@ -3,7 +3,7 @@
 package com.girrafeecstud.file_manager.presentation
 
 import com.girrafeecstud.core_ui.presentation.BaseComponentViewModel
-import com.girrafeecstud.file_manager.di.FileManagerComponent
+import com.girrafeecstud.file_manager.di.FileManagerFeatureComponent
 import com.girrafeecstud.file_manager.di.FileManagerDashboardComponent
 
 class FileManagerDashboardComponentViewModel : BaseComponentViewModel() {
@@ -26,7 +26,8 @@ class FileManagerDashboardComponentViewModel : BaseComponentViewModel() {
     }
 
     override fun initComponent() {
-        _fileManagerDashboardComponent = FileManagerComponent.fileManagerComponent.fileManagerDashboardComponent().build()
+        _fileManagerDashboardComponent = FileManagerFeatureComponent
+            .fileManagerFeatureComponent.fileManagerDashboardComponent().build()
     }
 
     override fun destroyComponent() {

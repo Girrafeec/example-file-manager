@@ -10,9 +10,16 @@
     <include
         app:graph="@navigation/file_list_flow"/>
 
+    <include
+        app:graph="@navigation/modified_files_flow"/>
+
     <action
         android:id="@+id/action_global_file_manager_flow_fragment"
         app:destination="@id/file_manager_flow_fragment"/>
+
+    <action
+        android:id="@+id/action_global_modified_files_flow_fragment"
+        app:destination="@id/modified_files_flow_fragment"/>
 
     <action
         android:id="@+id/action_global_file_list_flow_fragment"
@@ -39,5 +46,9 @@
             android:defaultValue="@null"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/modified_files_flow_fragment"
+        android:name="com.girrafeecstud.modified_files_impl.ui.ModifiedFilesFlowFragment"/>
 
 </navigation>

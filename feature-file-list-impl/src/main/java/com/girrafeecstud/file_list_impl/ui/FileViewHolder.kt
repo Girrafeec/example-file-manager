@@ -4,6 +4,7 @@ package com.girrafeecstud.file_list_impl.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import com.girrafeecstud.file_list_api.domain.FileInfo
+import com.girrafeecstud.file_list_api.ui.FileClickEvent
 import com.girrafeecstud.file_list_impl.databinding.FileItemBinding
 
 class FileViewHolder(

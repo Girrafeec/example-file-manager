@@ -5,6 +5,7 @@ package com.girrafeecstud.file_list_impl.data
 import android.content.Context
 import android.os.Build
 import android.os.Environment
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.girrafeecstud.core_base.base.ExceptionType
 import com.girrafeecstud.core_base.base.NoReadMemoryPermissionsException
@@ -52,6 +53,7 @@ class LocalFilesDataSource @Inject constructor(
         flow {
             val files = mutableListOf<FileInfo>()
 
+            Log.i("files", "all files list path = $path")
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     files.addAll(getFiles(dirPath = path))
@@ -62,6 +64,7 @@ class LocalFilesDataSource @Inject constructor(
                 emit(BusinessResult.Exception(exceptionType = ExceptionType.NO_READ_MEMORY_PERMISSION))
             }
 
+            Log.i("files", "all files list = $files")
             emit(BusinessResult.Success(data = files))
         }
 
@@ -120,6 +123,7 @@ class LocalFilesDataSource @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getFiles(dirPath: String): List<FileInfo> {
 
+        Log.i("files", "get files from $dirPath")
         if (!context.hasReadMemoryPermissions())
             throw NoReadMemoryPermissionsException()
 
@@ -152,7 +156,7 @@ class LocalFilesDataSource @Inject constructor(
                     )
                 )
             }
-            getFiles(dirPath = file.absolutePath)
+            files.addAll(getFiles(dirPath = file.absolutePath))
         }
         return files
     }

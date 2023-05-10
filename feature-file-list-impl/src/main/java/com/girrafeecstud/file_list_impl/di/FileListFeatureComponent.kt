@@ -23,7 +23,7 @@ interface FileListFeatureComponent : FileListFeatureApi {
     @Component.Builder
     interface Builder {
 
-        fun dependencies(dependencies: FileListFeatureDependencies): FileListFeatureComponent.Builder
+        fun dependencies(dependencies: FileListFeatureDependencies): Builder
 
         fun build(): FileListFeatureComponent
 
